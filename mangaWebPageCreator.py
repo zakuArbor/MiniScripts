@@ -40,7 +40,7 @@ class Queue:
         return s
 
 
-def listing_directories(file_path:str, folders: 'Queue', previous:str='') -> None:
+def listing_directories(file_path:str, folders: 'Queue', previous:str) -> None:
     """
     Stores all files (pictures and folders) in the file path
 
@@ -52,6 +52,7 @@ def listing_directories(file_path:str, folders: 'Queue', previous:str='') -> Non
     picture = Queue()
     dir_lst = Queue()
     directory = (os.listdir(file_path))
+
     for file in directory:
         if os.path.isfile(file_path + file):
 
@@ -63,10 +64,11 @@ def listing_directories(file_path:str, folders: 'Queue', previous:str='') -> Non
 
     if not picture.is_empty():
         previous = create_page(file_path, picture, folders, previous)
+
     if not dir_lst.is_empty():
         while not dir_lst.is_empty():
             new_path = file_path + dir_lst.pop() + "/"
-            listing_directories(new_path, folders, previous)
+            previous = listing_directories(new_path, folders, previous)
     return previous
 
 
@@ -92,7 +94,6 @@ def create_page(file_path: str, picture: 'Queue', folders:'Queue', previous: 'st
     while not picture.is_empty(): #go through every picture in the directory
         handle.write("<img src = '" + picture.pop() + "'>\n")
 
-    folder_name = file_path.strip("/").split('/')
     if previous:
         handle.write("<a href = 'file:///" + previous + ".html'><b>PREVIOUS</b>\t\t</a>")
     else:
@@ -110,12 +111,12 @@ def create_page(file_path: str, picture: 'Queue', folders:'Queue', previous: 'st
 
 
 #main program#################################################################################################
-file_path = input("Please type in the file path to the folder you wish to create a web page for: ")
+file_path = input("Please type in the file path to the folder you wish to create a web page for: ").strip()
 while not os.path.exists(file_path) or not os.path.isdir(file_path):
     print("INVALID FILE PATH PLEASE TRY AGAIN\n")
     print("NOTE: You must input a valid file path to a directory and not a file so please check if you have spelt the path correctly\n")
     print("NOTE: File path must use '/' and not '\'")
-    file_path = input("Please type in the file path to the folder you wish to create a web page for: ")
+    file_path = input("Please type in the file path to the folder you wish to create a web page for: ").strip()
 
 orig_file_path = file_path.strip('/') + '/' #stips away any '/' just in case the user adds '/' to the end of their input
 webpage_lst = Queue() #for future development
