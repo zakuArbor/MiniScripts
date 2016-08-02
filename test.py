@@ -53,7 +53,7 @@ def listing_directories(file_path:str, folders: 'Queue', previous:str) -> None:
     dir_lst = Queue()
     directory = (os.listdir(file_path))
 
-    print("initial:" + previous + "\n")
+    #print("initial:" + previous + "\n")
 
     for file in directory:
         if os.path.isfile(file_path + file):
@@ -63,18 +63,22 @@ def listing_directories(file_path:str, folders: 'Queue', previous:str) -> None:
         else:
             dir_lst.push(file) #store folder name into the Queue
             folders.push(file_path + file) #store file path including the folder name
-
+    print("for Justin")
+    previous = "i fking hate this hsiT"
     if not picture.is_empty():
         previous = create_page(file_path, picture, folders, previous)
         print("after:" + previous)
 
     print("before send:" + previous)
     if not dir_lst.is_empty():
+        print("WHY YOU NO PRINT")
         print("test:" + previous)
         while not dir_lst.is_empty():
-            print("sending:" + previous)
+            print("sending previous:" + previous + "\n")
             new_path = file_path + dir_lst.pop() + "/"
             listing_directories(new_path, folders, previous)
+    else:
+        print("skips if statement")
 
     return previous
 
