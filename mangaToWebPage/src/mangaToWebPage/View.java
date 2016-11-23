@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 public class View extends JFrame implements ActionListener {
 	private FileChooserPanel fileChooserPanel;
 	private CreateWebPagePanel createWebPagePanel;	
+	private DirectoryInfoPanel directoryInfoPanel;
 	private File target_directory;
 	
 	public View() {
@@ -32,6 +33,9 @@ public class View extends JFrame implements ActionListener {
 		
 		this.fileChooserPanel = new FileChooserPanel(this);
 		main.add(this.fileChooserPanel);
+		
+		this.directoryInfoPanel = new DirectoryInfoPanel();
+		main.add(this.directoryInfoPanel);
 		
 		this.createWebPagePanel = new CreateWebPagePanel();
 		main.add(this.createWebPagePanel);
