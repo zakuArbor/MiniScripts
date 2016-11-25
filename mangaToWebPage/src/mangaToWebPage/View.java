@@ -34,8 +34,10 @@ public class View extends JFrame implements ActionListener {
 		this.fileChooserPanel = new FileChooserPanel(this);
 		main.add(this.fileChooserPanel);
 		
-		this.directoryInfoPanel = new DirectoryInfoPanel();
+		this.directoryInfoPanel = new DirectoryInfoPanel(this);
 		main.add(this.directoryInfoPanel);
+		
+		this.fileChooserPanel.addObservers(directoryInfoPanel);
 		
 		this.createWebPagePanel = new CreateWebPagePanel();
 		main.add(this.createWebPagePanel);
@@ -51,6 +53,11 @@ public class View extends JFrame implements ActionListener {
 	public void set_target_directory(File target) {
 		this.target_directory = target;
 	}
+	
+	public File get_target_directory() {
+		return this.target_directory;
+	}
+	
 	/*
 	private JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
