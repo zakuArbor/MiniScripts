@@ -2,9 +2,12 @@ package mangaToWebPage;
 
 public class webPageGUI {
 	View view;
-	
+	webGeneratorModel model;
 	public webPageGUI () {
-		view = new View();
+		System.out.println("Hello World");
+		model = new webGeneratorModel();
+		view = new View(model);
+		
 		
 	}
 	

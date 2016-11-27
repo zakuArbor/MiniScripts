@@ -21,12 +21,15 @@ public class View extends JFrame implements ActionListener {
 	private CreateWebPagePanel createWebPagePanel;	
 	private DirectoryInfoPanel directoryInfoPanel;
 	private File target_directory;
+	private webGeneratorModel model;
 	
-	public View() {
+	public View(webGeneratorModel model) {
 		super("Manga Webpage Creator");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setJMenuBar(createMenuBar());
 		Container c=this.getContentPane();
+		
+		this.model = model;
 		
 		JPanel main = new JPanel();
 		main.setLayout(new GridLayout(2, 1, 5, 5));
@@ -39,7 +42,7 @@ public class View extends JFrame implements ActionListener {
 		
 		this.fileChooserPanel.addObservers(directoryInfoPanel);
 		
-		this.createWebPagePanel = new CreateWebPagePanel();
+		this.createWebPagePanel = new CreateWebPagePanel(this, model);
 		main.add(this.createWebPagePanel);
 		
 		c.add(main, BorderLayout.CENTER);

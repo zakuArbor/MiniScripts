@@ -13,7 +13,7 @@ public class DirectoryInfoPanel extends JPanel implements ObserverWM {
 	private JTextArea infoTextbox;
 	
 	public DirectoryInfoPanel(View view) {
-		infoTextbox = new JTextArea(2, 40);
+		infoTextbox = new JTextArea(2, 30);
 		infoTextbox.setText(
 				  "PATH\t: \n"
 				+ "# of Chapters: ");
@@ -23,10 +23,13 @@ public class DirectoryInfoPanel extends JPanel implements ObserverWM {
 
 	@Override
 	public void updateComponentsWM(ObservableWM o) {
-		String temp_path = path + view.get_target_directory() + "\n";
+		String temp_path_name = "" + view.get_target_directory();
+		if (temp_path_name.length() > 30) {
+			temp_path_name = "..." + temp_path_name.substring(temp_path_name.length()-35);
+		}
+		String temp_path = path + temp_path_name + "\n";
 		int numberOfChapters = 0; //number of folders in the path
 		File listDir[] = view.get_target_directory().listFiles();
-		System.out.println("test" + view.get_target_directory());
 		if (listDir != null) {
 			for (int i = 0; i < listDir.length; i++) {
 			    if (listDir[i].isDirectory()) {
