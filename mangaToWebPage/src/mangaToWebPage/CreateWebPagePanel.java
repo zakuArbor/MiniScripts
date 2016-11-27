@@ -7,10 +7,23 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * CreateWebPagePanel is a JPanel that implements ActionListener to listen and respond to user interaction
+ * with the Generate WebPage Button. 
+ * @author zakuarbor
+ *
+ */
 public class CreateWebPagePanel extends JPanel implements ActionListener {
 	private webGeneratorModel model;
 	private View view;
 	
+	/**
+	 * Creates a CreateWebPagePanel that creates a button representing the action to generate webpages
+	 * @param view
+	 * 			a View that is responsible with the Program's Graphical user interface
+	 * @param model
+	 * 			a webPageGeneratorModel that is responsible in generating webPages
+	 */
 	public CreateWebPagePanel(View view, webGeneratorModel model) {
 		this.model = model;
 		this.view = view;
@@ -18,7 +31,7 @@ public class CreateWebPagePanel extends JPanel implements ActionListener {
 		this.add(generateButton);
 		generateButton.addActionListener(this);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (view.get_target_directory() != null) {

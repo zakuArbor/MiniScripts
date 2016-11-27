@@ -16,13 +16,23 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-public class View extends JFrame implements ActionListener {
-	private FileChooserPanel fileChooserPanel;
-	private CreateWebPagePanel createWebPagePanel;	
-	private DirectoryInfoPanel directoryInfoPanel;
-	private File target_directory;
-	private webGeneratorModel model;
+/**
+ * View is a JFrame that is responsible for the program's GUI.
+ * @author zakuarbor
+ *
+ */
+public class View extends JFrame {
+	private FileChooserPanel fileChooserPanel; //allows user to choose a directory
+	private CreateWebPagePanel createWebPagePanel;	//where the generate button is created
+	private DirectoryInfoPanel directoryInfoPanel; //where the Directory information is updated and created 
+	private File target_directory; 
+	private webGeneratorModel model; //responsible for creating webpages
 	
+	/**
+	 * Create a View which is a JFrame which creates the program's GUI
+	 * @param model
+	 * 			a webPageGeneratorModel that is responsible in generating webPages
+	 */
 	public View(webGeneratorModel model) {
 		super("Manga Webpage Creator");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,74 +57,23 @@ public class View extends JFrame implements ActionListener {
 		
 		c.add(main, BorderLayout.CENTER);
 				
-				
 		this.pack();
-		// this.setSize(200,200);
 		this.setVisible(true);
 	}
 	
+	/**
+	 * A setter that sets the target directory
+	 * @param target
+	 * 			a File that is where the Manga Chapters are located
+	 */
 	public void set_target_directory(File target) {
 		this.target_directory = target;
 	}
 	
+	/**
+	 * @return the target directory where the Manga chapters are located
+	 */
 	public File get_target_directory() {
 		return this.target_directory;
-	}
-	
-	/*
-	private JMenuBar createMenuBar() {
-		JMenuBar menuBar = new JMenuBar();
-		JMenu menu;
-		JMenuItem menuItem;
-
-		menu = new JMenu("File");
-
-		// a group of JMenuItems
-		menuItem = new JMenuItem("New");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-
-		menuItem = new JMenuItem("Open");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-
-		menuItem = new JMenuItem("Save");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-
-		menu.addSeparator();// -------------
-
-		menuItem = new JMenuItem("Exit");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-
-		menuBar.add(menu);
-
-		menu = new JMenu("Edit");
-
-		// a group of JMenuItems
-		menuItem = new JMenuItem("Cut");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-
-		menuItem = new JMenuItem("Copy");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-
-		menuItem = new JMenuItem("Paste");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-
-		menu.addSeparator();// -------------
-
-		return menuBar;
-	}*/
-	
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand() == "select_directory") {
-			
-		}
-	}
+	}	
 }

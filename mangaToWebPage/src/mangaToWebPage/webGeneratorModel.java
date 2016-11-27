@@ -7,6 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * webGeneratorModel is the class responsible in generating webpages when user clicks on
+ * the generate button. 
+ * @author zakuarbor
+ *
+ */
 public class webGeneratorModel {
 	private File target_directory;
 	private ArrayList<File> chapter_files = new ArrayList<File>();
@@ -18,7 +24,7 @@ public class webGeneratorModel {
 	public void createWebPage(View view) {
 		this.target_directory = view.get_target_directory();
 		
-		File listDir[] = view.get_target_directory().listFiles();
+		File listDir[] = view.get_target_directory().listFiles(); //get all files from the target directory
 		store_chapters(listDir); //gathers and stores all chapters into an array
 		create_chapters(); //creates webpages for each chapter
 		JOptionPane.showMessageDialog(new JFrame(), "Task Completed");
@@ -67,6 +73,13 @@ public class webGeneratorModel {
 		}
 	}
 	
+	/**
+	 * Creates and writes an HTML webpage for each chapter
+	 * @param html
+	 * 			a String that contains that HTML for the webpage
+	 * @param string_file
+	 * 			a String where the file is to be saved
+	 */
 	public void writeWebPage(String html, String string_file) {
 		try {
 			FileWriter fileWriter = new FileWriter(target_directory + "/" + string_file+  "/" + string_file + ".html");

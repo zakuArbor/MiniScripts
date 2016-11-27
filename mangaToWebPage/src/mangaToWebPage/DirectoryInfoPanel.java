@@ -6,12 +6,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * DirectoryInfoPanel is a JPanel that implements ObserverWM. DirectoryInfoPanel has a JTextArea
+ * where the information about the Directory is displayed.
+ * @author zakuarbor
+ *
+ */
 public class DirectoryInfoPanel extends JPanel implements ObserverWM {
 	String path = "PATH\t:";
 	String chapters = "# of Chapters: ";
 	private View view;
 	private JTextArea infoTextbox;
 	
+	/**
+	 * Creates a DirectroyInfoPanel which is responsible in creating a text area 
+	 * @param view
+	 */
 	public DirectoryInfoPanel(View view) {
 		infoTextbox = new JTextArea(2, 30);
 		infoTextbox.setText(
