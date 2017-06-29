@@ -1,0 +1,8 @@
+echo -e "\tFILE AND DIRECTORY MANAGEMENT COMMANDS"
+echo "1 -- Display the contents of a file"
+echo "2 -- Remove a file"
+echo "3 -- Copy a file"
+echo "4 -- List a file"
+echo "5 -- Size of a file"
+echo "6 -- Quit -- Return to main Menu"
+echo -ne "\tEnter your choice:"
