@@ -1,27 +1,23 @@
 sh main_menu.sh
-if test $# -gt 1
+if test $# -gt 0
 then
     echo
     echo -e "\tusage: $0 [option]" >&2
     exit 1
 fi
 
-if test $# -eq 1
-then
-	cmd=$1
-else
-	read cmd
-fi
+read cmd
 
 case "$cmd" in
 	"help")
-		echo "usage: $0 [help|file|text|status]"
+		echo "usage: $0"
 	;;
-	"file")
+	"file") #file
 		clear
+		echo "test"
 		sh file.sh
 	;;
-	"text")
+	"text") 
 		clear
 		sh test.sh
 	;;
@@ -34,6 +30,7 @@ case "$cmd" in
 		exit
 	;;
 	*)
-		echo usage: $0 [option] >2
+		echo usage: $0 [option] >&2
+		exit 1
 	;;
 esac
