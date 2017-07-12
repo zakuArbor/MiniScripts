@@ -30,7 +30,7 @@ case "$cmd" in
 		exit
 	;;
 	*)
-		echo usage: $0 [option] >&2
+		echo usage: $0 >&2
 		exit 1
 	;;
 esac
