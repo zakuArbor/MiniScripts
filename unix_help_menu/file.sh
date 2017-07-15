@@ -3,7 +3,8 @@ cat_error=": No such file or is a directory"
 file_error=": No such file or directory"
 if test $# -gt 2
 then
-	echo $usage 
+	echo $usage >&2 
+	exit 1
 else
 	if test $# -eq 0
 	then
@@ -29,7 +30,8 @@ case "$cmd" in
 		then	
 			cat $file
 		else
-			echo $file$cat_error
+			echo $file$cat_error >&2
+			exit 1
 		fi
 	;;
 	"2") #Remove a file
@@ -41,7 +43,8 @@ case "$cmd" in
 			then
 				rm -r $file
 			else
-				echo $file$file_error
+				echo $file$file_error >&2
+				exit 1
 			fi
 		fi 
 	;;
@@ -54,7 +57,8 @@ case "$cmd" in
 					i=`expr $i + 1`
 				done
 			else 
-				echo $file$file_error
+				echo $file$file_error >&2
+				exit 1
 		fi
 		if test -f $file
 		then
@@ -72,7 +76,8 @@ case "$cmd" in
 	"5") #Size of a file
 		if ! test -s $file
 		then
-			echo $file$file_error
+			echo $file$file_error >&2
+			exit 1
 		fi
 		if test -f $file
 		then
