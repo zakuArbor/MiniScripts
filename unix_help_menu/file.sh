@@ -70,6 +70,19 @@ case "$cmd" in
 		ls -l $file
 	;;
 	"5") #Size of a file
+		if ! test -s $file
+		then
+			echo $file$file_error
+		fi
+		if test -f $file
+		then
+			echo `stat -c '%s' $file` bytes
+		else
+			if test -d $file
+			then
+				echo `du -hs $file| awk '{print $1}'` 
+			fi
+		fi
 	;;
 	"6") #Return to main menu
 		sh main.sh
