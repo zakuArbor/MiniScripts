@@ -2,7 +2,7 @@ sh main_menu.sh
 if test $# -gt 0
 then
     echo
-    echo -e "\tusage: $0 [option]" >&2
+    echo -e "\tusage: $0" >&2
     exit 1
 fi
 
@@ -12,20 +12,20 @@ case "$cmd" in
 	"help")
 		echo "usage: $0"
 	;;
-	"file") #file
+	"1") #file
 		clear
 		echo "test"
 		sh file.sh
 	;;
-	"text") 
+	"2") 
 		clear
 		sh test.sh
 	;;
-	"status")
+	"3")
 		clear
 		sh status.sh
 	;;
-	"exit")
+	"4")
 		clear
 		exit
 	;;
