@@ -14,7 +14,6 @@ case "$cmd" in
 	;;
 	"1") #file
 		clear
-		echo "test"
 		sh file.sh
 	;;
 	"2") 
@@ -23,7 +22,7 @@ case "$cmd" in
 	;;
 	"3")
 		clear
-		sh status.sh
+		sh system.sh
 	;;
 	"4")
 		clear
