@@ -20,10 +20,10 @@ case "$cmd" in
 		df -h
 	;;
 	"3") #List current local and environment 
-		echo
+		printenv
 	;;
 	"4") #Display Process status information
-		echo
+		ps -e
 	;;
 	"5") #Return to main menu
 		sh main.sh
