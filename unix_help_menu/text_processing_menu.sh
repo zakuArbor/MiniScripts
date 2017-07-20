@@ -1,6 +1,6 @@
 echo -e "\tTEXT PROCESSING COMMANDS"
 echo "1 -- Search a file for a pattern"
-echo "1 -- Search a file for a pattern"
+echo "2 -- Count lines, words, and characters in specified files"
 echo "3 -- Display line differences between two files"
 echo "4 -- Return to Main Menu"
 echo -ne "\tEnter your choice:"
