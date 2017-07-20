@@ -13,7 +13,7 @@ else
 fi
 case "$cmd" in
 	"1") #Display current date and time
-		eccho date "+%D %R"
+		echo date "+%D %R"
 	;;
 	"2") #Current Disk usage
 	;;
