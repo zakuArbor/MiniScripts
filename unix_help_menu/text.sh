@@ -46,15 +46,15 @@ case "$cmd" in
 				exit 1
 			fi
 		else
-			$file2=$file #swap file and file 2
-			$file=$2
+			file2=$file #swap file and file 2
+			file=$2
 			if ! test -f $file
 			then
 				echo $file$file_error >&2
 				exit 1
 			fi
 		fi
-		diff $file $file2
+		diff "$file" "$file2"
 	;;
 	"4") #Return to main menu
 		sh main.sh
