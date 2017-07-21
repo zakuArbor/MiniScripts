@@ -18,7 +18,7 @@ case "$cmd" in
 	;;
 	"2") 
 		clear
-		sh test.sh
+		sh text.sh
 	;;
 	"3")
 		clear
