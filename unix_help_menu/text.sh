@@ -1,4 +1,9 @@
-usage="usage: $0 [option pattern file]"
+#NOTE
+#for option 2, we ignore the third paramter regardless if it is given
+#for option 4, we ignore all extra parameters
+
+usage="usage: $0 [option pattern file]|[option file]"
+
 file_error=": No such file"
 if test $# -gt 3
 then
@@ -14,9 +19,15 @@ else
 fi
 if test $# -gt 2
 then
-	file=$3
+	if test "$cmd" -ne 2
+	then
+		file=$3
+	else 
+		file=$2
+	fi
 fi
-if test "$cmd" -gt 0 && test "$cmd" -lt 4 && test $# -lt 2 
+
+if test "$cmd" -gt 0 && test "$cmd" -lt 3 && test $# -lt 2 
 then
 	echo -ne "\tEnter file name: "
 	read file
@@ -32,8 +43,8 @@ case "$cmd" in
 	"1") #Search a file for a pattern
 		grep $2 $file
 	;;
-	"2") #Count lines, words, and characters in specified files
-		wc $file
+	"2") #Count lines, words, and characters in specified file
+		wc -lwc $file
 	;;
 	"3") #Differences between two files
 		if test $# -ne 3
