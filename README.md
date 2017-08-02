@@ -10,6 +10,8 @@
 </ul>
 
 # <span id = "manga-to-web">Manga Webpage Generator</span>
+<p><i>Please be advised to support manga artist when you can by buying a copy of their manga</i></p>
+
 <p><b id = "manga-console">mangaWebPageCreator.py</b>: A script to create a webpage for all your downloaded manga or pictures that are stored locally</p>
 
 <b>Dependencies:</b> <a href = "https://www.python.org/downloads/">Python 3</a>
@@ -17,13 +19,21 @@
 To run the program:
 
 ```
-$python3 mangaToWebPage.py
+$ python3 mangaToWebPage.py
 ```
 
 <p><b id = "manga-gui">mangaToWebPage</b>: A Java GUI version of mangaWebPageCreator.py that has a more friendly UI to create webpages for all downloaded manga</p>
-<p><i>Please be advised to support manga artist when you can by buying a copy of their manga</i></p>
 
 <b>Dependencies:</b> <a href = "http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java JDK</a>
+
+To run the program:
+
+```
+$ git clone https://github.com/zakuArbor/MiniScripts.git
+$ cd MiniScripts/mangaToWebPage/src
+$ java -cp . mangaToWebPage/webPageGUI.java #compile
+$ java mangaToWebPage/webPageGUI.java #run
+```
 
 <p><center>
 
