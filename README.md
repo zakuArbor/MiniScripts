@@ -27,7 +27,7 @@ $python3 mangaToWebPage.py
 
 <p><center>
 
-![](https://lh3.googleusercontent.com/Jwk3ucObsbCEUOiX306OMxXbXYD-OO86UlsxDk7Ba0e0xJbQZ0f9I2eQ60iEw6LooWQIoXEErNmx8zjksTw4xM41Zp5UrvxEEyG8knCRVBqvghaH-T_kAMyyOedACODeWHhdUIr889OyPDw5L6kM5MyVwx2LRKD1MqfQ0HoSVvKjjl4ilU-eGxXKlRiM0suzQKOlb9qbo_6hX3VeeewczZCGEm4T6p9cnBhfl45ZqvDG5iLfTgqmL8e1vS87N-oaETDw9s-o4o5xnlhLOyb3HGFaN6qBSoqjROZrhD1BghQoZHuOPw8bmczAzp7t0dJ7PfRDJyNoDCmYCOdOIZtX-NPB5ONiuBkbpcVTyR0613DC0RIP8zX0PhIm0N41A1pXaW4cM_JYOrxFR73Y5kA10cu9ZotFbzY3yLJzh2vZBSN66NZv37DTLBkhNPMKEQwu-qPhH8iEz3dHGl4oT3qnZtofFbwXchPM6Qj5jgdTqsUQXwU7xGlZKY181NHRzQIxR2mJkDM0d0gPlcvFKIwKtSds9zQ-r_liXWEC-F6JLsHUVkqbYRs9GbIlUbqg2D3GvnYKuU8eZN5TkKDQUCeGs40UstoJNmSXyQzAx28ytuYmIFHC=w360-h301-no "Logo Title Text 1")
+![](http://i.imgur.com/kWY87wb.gif "GIF")
 
 </center>
 <p>Features: Back and next chapter button</p>
