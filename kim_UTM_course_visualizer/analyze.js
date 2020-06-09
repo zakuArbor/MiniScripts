@@ -12,7 +12,7 @@ function order_by_course_year(data) {
 		"fourth": []
 	};
 	for (var i = 0; i < data.length; i++) {
-		course_level = data[i]["course_code"][3];
+		var course_level = data[i]["course_code"][3];
 		switch(course_level) {
 			case '1':
 				obj.first.push(data[i]);
@@ -33,5 +33,16 @@ function order_by_course_year(data) {
 }
 
 function order_by_department(data, departments) {
-
+	var obj = {}
+	for (var i = 0; i < data.length; i++) {
+		var department = data[i]["course_code"].slice(0,3);
+		if (obj.hasOwnProperty(department)) {
+			obj[department].push(data[i]);
+		}
+		else {
+			obj[department] = [data[i]];
+		}
+	}
+	console.log(obj);
+	return obj;
 }
