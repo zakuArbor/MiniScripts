@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kim's Course Data</title>
+    <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+    <script language="javascript" src="courses.js"></script>
+    <script language="javascript" src="departments.js"></script>
+    <script language="javascript" src="analyze.js"></script>
+    <script language="javascript" src="labels.js"></script>
+    <script language="javascript" src="graph.js"></script>
+</head>
+<body>
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+    /*
+var ctx = document.getElementById('myChart');
+var myPieChart = new Chart(ctx, {
+    type: 'pie',
+    data: data,
+    options: options
+});
+data = order_by_course_year(get_courses());*/
+raw_data = get_courses();
+draw_course_year(raw_data);
+</script>
+</body>
+</html>
