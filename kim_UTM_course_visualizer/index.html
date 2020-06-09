@@ -10,18 +10,13 @@
     <script language="javascript" src="graph.js"></script>
 </head>
 <body>
-<canvas id="myChart" width="400" height="400"></canvas>
+<canvas id="year_chart" width="400" height="400"></canvas>
+<canvas id="dept_chart" width="400" height="400"></canvas>
 <script>
-    /*
-var ctx = document.getElementById('myChart');
-var myPieChart = new Chart(ctx, {
-    type: 'pie',
-    data: data,
-    options: options
-});
-data = order_by_course_year(get_courses());*/
-raw_data = get_courses();
-draw_course_year(raw_data);
+var raw_data = get_courses();
+var departments = get_departments();
+var course_chart = draw_course_years(raw_data);
+var dept_chart = draw_course_departments(raw_data, departments);
 </script>
 </body>
 </html>

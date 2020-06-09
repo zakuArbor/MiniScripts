@@ -28,7 +28,6 @@ function order_by_course_year(data) {
 				break;
 		}
 	}
-	console.log(obj);
 	return obj;
 }
 
@@ -43,6 +42,15 @@ function order_by_department(data, departments) {
 			obj[department] = [data[i]];
 		}
 	}
-	console.log(obj);
 	return obj;
+}
+
+function count_by_credits(data) {
+	console.log("------");
+	console.log(data);
+	var credits = 0;
+	for (var i = 0; i < data.length; i++) {
+		credits += data[i]["credits"];
+	}
+	return credits;
 }
