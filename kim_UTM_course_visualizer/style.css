@@ -1,0 +1,12 @@
+#container, canvas {
+	margin: auto;
+}
+
+#dept_courses, #dept_courses_div {
+	margin: auto;
+	text-align: center;
+}
+
+#dept_courses {
+	background-color: #EEE;
+}

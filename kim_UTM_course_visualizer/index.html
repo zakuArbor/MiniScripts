@@ -2,59 +2,106 @@
 <html>
 <head>
     <title>Kim's Course Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
     <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-    <script language="javascript" src="courses.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    
+   	<script language="javascript" src="courses.js"></script>
     <script language="javascript" src="departments.js"></script>
     <script language="javascript" src="analyze.js"></script>
     <script language="javascript" src="labels.js"></script>
     <script language="javascript" src="graph.js"></script>
 </head>
 <body>
-<canvas id="year_chart" width="400" height="400"></canvas>
-<div id = "dept_div">
-<canvas id="dept_chart" width="400" height="400"></canvas>
-<div id = "dept_courses"></div>
-</div>
-<script>
-$(document).ready(
-	function () {
-		var raw_data = get_courses();
-		var departments = get_departments();
-		var dept_codes = get_dept_codes();
-
-		var dept_courses = order_by_department(raw_data);
-
-		var course_chart = draw_course_years(raw_data);
-		var dept_chart = draw_course_departments(dept_courses, departments);
-
-		var dept_chart_dom = document.getElementById("dept_chart");
-		var dept_courses_dom = document.getElementById("dept_courses");
+<div id = "container">
 	
-		dept_chart_dom.onclick = function(evt) {
-			var activePoints = dept_chart.getElementsAtEvent(evt);
-			if (activePoints[0]) {
-				var chartData = activePoints[0]['_chart'].config.data;
-				var idx = activePoints[0]['_index'];
+	<canvas id="year_chart" width="400" height="400"></canvas>
+	<div id = "dept_div">
 
-				var label = chartData.labels[idx];
-				var value = chartData.datasets[0].data[idx];
-				//console.log(label);
-				display_dept_courses(dept_codes[label]);
-			}
-		}
+	<canvas id="dept_chart" width="400" height="400"></canvas>
+	<div id = "dept_courses_div">
+		 <button id  = "dept_btn" type="button">Toggle</button>
+		<div id = "dept_courses" class="collapse show"></div>
+	</div>
+	</div>
 
-		function display_dept_courses(departments) {
-			for (let i = 0; i < departments.length; i++) {
-				let dept = departments[i];
-				if (dept in dept_courses) {
-					console.log(dept_courses[dept]);
+	<script>
+
+	$(document).ready(
+		function () {
+			var raw_data = get_courses();
+			var departments = get_departments();
+			var dept_codes = get_dept_codes();
+
+			var dept_courses = order_by_department(raw_data);
+
+			var course_chart = draw_course_years(raw_data);
+			var dept_chart = draw_course_departments(dept_courses, departments);
+
+			var dept_chart_dom = document.getElementById("dept_chart");
+			var dept_courses_dom = document.getElementById("dept_courses");
+			var dept_courses_div_dom = document.getElementById("dept_courses_div");
+			var dept_btn = document.getElementById("dept_btn");
+			var dept_toggle = true; //true to show; false to hide
+		
+			dept_chart_dom.onclick = function(evt) {
+				var activePoints = dept_chart.getElementsAtEvent(evt);
+				if (activePoints[0]) {
+					var chartData = activePoints[0]['_chart'].config.data;
+					var idx = activePoints[0]['_index'];
+
+					var label = chartData.labels[idx];
+					var value = chartData.datasets[0].data[idx];
+					//console.log(label);
+					display_dept_courses(dept_codes[label]);
 				}
 			}
+
+			dept_btn.onclick = function(evt) {
+				dept_toggle = dept_toggle ? false : true;
+				if (dept_toggle) {
+					dept_courses_dom.style.display = "block";
+				}
+				else {
+					dept_courses_dom.style.display = "None";	
+				}
+			}
+
+			function format_course(course) {
+				console.log(course)
+				return "<p>" + course["course_code"] + " - " + course["course_title"] + "</p>";
+			}
+
+			function format_courses(courses) {
+				let html = "";
+				
+				courses.sort(function(a, b) { return a["course_code"] < b ["course_code"] ? -1 : 1 });
+				
+				for (let i = 0; i < courses.length; i++) {
+					html += format_course(courses[i]);
+				}
+				return html;
+			}
+
+			function display_dept_courses(departments) {
+				var html = "";
+				for (let i = 0; i < departments.length; i++) {
+					let dept = departments[i];
+					if (dept in dept_courses) {
+						html += format_courses(dept_courses[dept]);
+					}
+				}
+				console.log(html);
+				dept_toggle = true;
+				dept_courses_dom.style.display = "block";
+				dept_courses_dom.innerHTML = html;
+			}
 		}
-	}
-);
-</script>
-<div id = "departments"></div>
+	);
+	</script>
+	<div id = "departments"></div>
+</div>
 </body>
 </html>
