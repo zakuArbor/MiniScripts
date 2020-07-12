@@ -3,6 +3,7 @@
 <head>
     <title>Kim's Course Data</title>
     <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
     <script language="javascript" src="courses.js"></script>
     <script language="javascript" src="departments.js"></script>
     <script language="javascript" src="analyze.js"></script>
@@ -11,12 +12,49 @@
 </head>
 <body>
 <canvas id="year_chart" width="400" height="400"></canvas>
+<div id = "dept_div">
 <canvas id="dept_chart" width="400" height="400"></canvas>
+<div id = "dept_courses"></div>
+</div>
 <script>
-var raw_data = get_courses();
-var departments = get_departments();
-var course_chart = draw_course_years(raw_data);
-var dept_chart = draw_course_departments(raw_data, departments);
+$(document).ready(
+	function () {
+		var raw_data = get_courses();
+		var departments = get_departments();
+		var dept_codes = get_dept_codes();
+
+		var dept_courses = order_by_department(raw_data);
+
+		var course_chart = draw_course_years(raw_data);
+		var dept_chart = draw_course_departments(dept_courses, departments);
+
+		var dept_chart_dom = document.getElementById("dept_chart");
+		var dept_courses_dom = document.getElementById("dept_courses");
+	
+		dept_chart_dom.onclick = function(evt) {
+			var activePoints = dept_chart.getElementsAtEvent(evt);
+			if (activePoints[0]) {
+				var chartData = activePoints[0]['_chart'].config.data;
+				var idx = activePoints[0]['_index'];
+
+				var label = chartData.labels[idx];
+				var value = chartData.datasets[0].data[idx];
+				//console.log(label);
+				display_dept_courses(dept_codes[label]);
+			}
+		}
+
+		function display_dept_courses(departments) {
+			for (let i = 0; i < departments.length; i++) {
+				let dept = departments[i];
+				if (dept in dept_courses) {
+					console.log(dept_courses[dept]);
+				}
+			}
+		}
+	}
+);
 </script>
+<div id = "departments"></div>
 </body>
 </html>

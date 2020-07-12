@@ -89,10 +89,10 @@ function draw_course_years(raw_data) {
     return create_pie_chart(ctx, data, options);
 }
 
-function get_dept_graph_data(raw_data, departments) {
+function get_dept_graph_data(data, departments) {
     var labels = [];
     var data_points = [];
-    var data = order_by_department(raw_data);
+    //var data = order_by_department(raw_data);
     
     for (const property in data) {
         labels.push(departments[property]);
@@ -107,6 +107,10 @@ function get_dept_graph_data(raw_data, departments) {
         }],
         "labels": labels,
     }
+}
+
+function list_courses(dept) {
+    alert(dept);
 }
 
 function draw_course_departments(raw_data, departments) {
