@@ -1,4 +1,11 @@
+# UTM Course Visualizer
+
+A simple webpage that shows various graphs about your progress at UTM over the years
+
+
+
 # Manga Webpage Generator
+
 <p><b>mangaWebPageCreator.py</b>: A script to create a webpage for all your downloaded manga or pictures that are stored locally</p>
 <p><b>mangaToWebPage</b>: A Java GUI version of mangaWebPageCreator.py that has a more friendly GUI to create webpages for all downloaded manga</p
 <p><i>Please be advised to support manga artist when you can by buying a copy of their manga</i></p>
