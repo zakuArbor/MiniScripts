@@ -10,9 +10,9 @@ A simple webpage that shows various graphs about your progress at UTM over the y
 <p><b>mangaToWebPage</b>: A Java GUI version of mangaWebPageCreator.py that has a more friendly GUI to create webpages for all downloaded manga</p
 <p><i>Please be advised to support manga artist when you can by buying a copy of their manga</i></p>
 <p>Created on August 2016<p/>
-<p><center><img src = 'https://github.com/zakuArbor/images/manga_web.gif'></p></center>
+<p><center><img src = 'https://github.com/zakuArbor/MiniScripts/tree/master/images/manga_web.gif'></p></center>
 <p>Features: Back and next chapter button</p>
-<p><img src = 'https://github.com/zakuArbor/images/manga_controls.PNG'></p>
+<p><img src = 'https://github.com/zakuArbor/MiniScripts/tree/master/images/manga_controls.PNG'></p>
 
 
 <p><h1><b>MENU SYSTEM</b></h1></p>
