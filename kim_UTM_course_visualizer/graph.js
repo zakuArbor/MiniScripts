@@ -59,10 +59,9 @@ function create_pie_chart(ctx, data, options) {
     });
 }
 
-function get_course_year_graph_data(raw_data) {
-    var labels = ["1st year", "2nd year", "3rd year", "4th year"];
+function get_course_year_graph_data(data) {
+    var labels = Object.keys(data);
 
-    var data = order_by_course_year(raw_data);
     var data_points = [];
 
     for (const property in data) {
@@ -84,7 +83,9 @@ function get_course_year_graph_data(raw_data) {
 function draw_course_years(raw_data) {
     var data = get_course_year_graph_data(raw_data);
     var title = "Number of courses by year";
+    
     var ctx = document.getElementById('year_chart');
+
     var options = create_options(title);
     return create_pie_chart(ctx, data, options);
 }

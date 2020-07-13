@@ -2,11 +2,11 @@
 	margin: auto;
 }
 
-#dept_courses, #dept_courses_div {
+#dept_courses, #dept_courses_div, #year_courses, #year_div {
 	margin: auto;
 	text-align: center;
 }
 
-#dept_courses {
+#dept_courses, #year_courses {
 	background-color: #EEE;
 }

@@ -6,25 +6,27 @@
 */
 function order_by_course_year(data) {
 	var obj = {
-		"first": [],
-		"second": [],
-		"third": [],
-		"fourth": []
+		"1st year": [],
+		"2nd year": [],
+		"3rd year": [],
+		"4th year": []
 	};
+	var labels = Object.keys(obj);
+
 	for (var i = 0; i < data.length; i++) {
 		var course_level = data[i]["course_code"][3];
 		switch(course_level) {
 			case '1':
-				obj.first.push(data[i]);
+				obj[labels[0]].push(data[i]);
 				break;
 			case '2':
-				obj.second.push(data[i]);
+				obj[labels[1]].push(data[i]);
 				break;
 			case '3':
-				obj.third.push(data[i]);
+				obj[labels[2]].push(data[i]);
 				break;
 			case '4':
-				obj.fourth.push(data[i]);
+				obj[labels[3]].push(data[i]);
 				break;
 		}
 	}

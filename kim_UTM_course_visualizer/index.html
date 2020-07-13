@@ -17,13 +17,17 @@
 <body>
 <div id = "container">
 	
+	<div id = "year_div">
 	<canvas id="year_chart" width="400" height="400"></canvas>
-	<div id = "dept_div">
+	<button id  = "year_btn" type="button">Toggle</button>
+	<div id = "year_courses"></div>
+	</div>
 
+	<div id = "dept_div">
 	<canvas id="dept_chart" width="400" height="400"></canvas>
 	<div id = "dept_courses_div">
 		 <button id  = "dept_btn" type="button">Toggle</button>
-		<div id = "dept_courses" class="collapse show"></div>
+		<div id = "dept_courses"></div>
 	</div>
 	</div>
 
@@ -36,36 +40,67 @@
 			var dept_codes = get_dept_codes();
 
 			var dept_courses = order_by_department(raw_data);
+			var year_courses = order_by_course_year(raw_data);
 
-			var course_chart = draw_course_years(raw_data);
+			var year_chart = draw_course_years(year_courses, raw_data);
 			var dept_chart = draw_course_departments(dept_courses, departments);
 
 			var dept_chart_dom = document.getElementById("dept_chart");
+			var year_chart_dom = document.getElementById("year_chart");
 			var dept_courses_dom = document.getElementById("dept_courses");
 			var dept_courses_div_dom = document.getElementById("dept_courses_div");
+			var year_courses_dom = document.getElementById("year_courses");
 			var dept_btn = document.getElementById("dept_btn");
+			var year_btn = document.getElementById("year_btn");
 			var dept_toggle = true; //true to show; false to hide
+			var year_toggle = true; //true to show; false to hide
 		
 			dept_chart_dom.onclick = function(evt) {
-				var activePoints = dept_chart.getElementsAtEvent(evt);
+				chart_event(evt, dept_chart, "dept");
+			}
+
+			year_chart_dom.onclick = function(evt) {
+
+				console.log("year");
+				chart_event(evt, year_chart, "year");
+			}
+
+			function chart_event(evt, chart, chart_name) {
+				var activePoints = chart.getElementsAtEvent(evt);
 				if (activePoints[0]) {
 					var chartData = activePoints[0]['_chart'].config.data;
 					var idx = activePoints[0]['_index'];
 
 					var label = chartData.labels[idx];
 					var value = chartData.datasets[0].data[idx];
-					//console.log(label);
-					display_dept_courses(dept_codes[label]);
+					
+					
+					display_courses(label, chart_name);
 				}
 			}
 
 			dept_btn.onclick = function(evt) {
 				dept_toggle = dept_toggle ? false : true;
-				if (dept_toggle) {
-					dept_courses_dom.style.display = "block";
+				toggle_content({
+					"toggle_val": dept_toggle,
+					"toggle_obj": dept_courses_dom,
+				});
+			}
+
+			year_btn.onclick = function(evt) {
+				year_toggle = year_toggle ? false : true;
+				toggle_content({
+					"toggle_val": year_toggle,
+					"toggle_obj": year_courses_dom,
+				});
+			}
+
+			function toggle_content(toggle_obj) {
+				if (toggle_obj["toggle_val"]) {
+					toggle_obj["toggle_obj"].style.display = "block";
 				}
 				else {
-					dept_courses_dom.style.display = "None";	
+					toggle_obj["toggle_obj"].style.display = "None";	
 				}
 			}
 
@@ -85,23 +120,61 @@
 				return html;
 			}
 
-			function display_dept_courses(departments) {
-				var html = "";
+			function format_dept_courses(departments) {
+				let html = "";
 				for (let i = 0; i < departments.length; i++) {
 					let dept = departments[i];
 					if (dept in dept_courses) {
 						html += format_courses(dept_courses[dept]);
 					}
 				}
-				console.log(html);
-				dept_toggle = true;
-				dept_courses_dom.style.display = "block";
-				dept_courses_dom.innerHTML = html;
+				return html;
+			}
+
+			function toggle_other_dom(chart_name) {
+				let other_dom;
+
+				switch (chart_name) {
+					case "dept":
+						dept_toggle = true;
+						year_toggle = false;
+						toggle_content({
+							"toggle_val": year_toggle,
+							"toggle_obj": year_courses_dom,
+						});
+						break;
+					case "year":
+						year_toggle = true;
+						dept_toggle = false;
+						toggle_content({
+							"toggle_val": dept_toggle,
+							"toggle_obj": dept_courses_dom,
+						});
+						break
+				}
+			}
+
+			function display_courses(label, chart_name) {
+				let html = "";
+				let courses_dom;
+				let other_dom;
+				switch (chart_name) {
+					case "dept":
+						html = format_dept_courses(dept_codes[label]);
+						courses_dom = dept_courses_dom;
+						break;
+					case "year":
+						html = format_courses(year_courses[label]);
+						courses_dom = year_courses_dom;
+						break;
+				}
+				toggle_other_dom(chart_name);
+				courses_dom.style.display = "block";
+				courses_dom.innerHTML = html;
 			}
 		}
 	);
 	</script>
-	<div id = "departments"></div>
 </div>
 </body>
 </html>
