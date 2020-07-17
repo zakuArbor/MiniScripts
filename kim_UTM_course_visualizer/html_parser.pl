@@ -1,6 +1,10 @@
 #!/bin/perl
 use strict;
 use warnings;
+use lib "scripts/";
+require 'Course.pm';
+
+use Course;
 
 sub strip_beginning {
 	my $fh = shift or die "File Handle is undefined";
@@ -31,6 +35,7 @@ sub parse_academic_history {
 	my $course_grade;
 	my $course_avg;
 	my $weight;
+	my $course;
 
 	my $state = 0;
 
@@ -51,31 +56,19 @@ sub parse_academic_history {
 				$state = 0;
 			}
 
-			if (($course_code, $course_name, undef, $weight, $course_grade, $course_avg) = $line =~ /$course_re/) {
-				print $course_code . "\n";
-				print "${course_name}\n";
-				print "${weight}\n";
-				print "${course_grade}\n";
-				print "${course_avg}\n";
-				$state = 2;
-			}
-			elsif ($state == 2) {
-				
+			if (($course_name2) = $line =~ /^\s+${course_name_re}\s+$/) {
 				#if course name is too long that it goes to another line
-				if (($course_name2) = $line =~ /^\s+${course_name_re}\s+$/) {
-					print "course2: ${course_name2}\n";
-				}
-				else { #another course
-					print("test");
-					if (($course_code, $course_name, undef, $weight, $course_grade, $course_avg) = $line =~ /$course_re/) {
-						print $course_code . "\n";
-						print "${course_name}\n";
-						print "${weight}\n";
-						print "${course_grade}\n";
-						print "${course_avg}\n";
-					}
-				}
-				$state = 1;
+				print "course2: ${course_name2}\n";
+			}
+			elsif (($course_code, $course_name, undef, $weight, $course_grade, $course_avg) = $line =~ /$course_re/) {
+				$course = Course->new({
+					course_code => $course_code, 
+					course_name => chomp($course_name), 
+					weight      => $weight, 
+					course_grade=> $course_grade, 
+					course_avg  => $course_avg
+				});
+				print($course->to_string() . "\n");
 			}
 		}
 	}
