@@ -61,9 +61,10 @@ sub parse_academic_history {
 				print "course2: ${course_name2}\n";
 			}
 			elsif (($course_code, $course_name, undef, $weight, $course_grade, $course_avg) = $line =~ /$course_re/) {
+				chomp($course_name);
 				$course = Course->new({
 					course_code => $course_code, 
-					course_name => chomp($course_name), 
+					course_name => $course_name, 
 					weight      => $weight, 
 					course_grade=> $course_grade, 
 					course_avg  => $course_avg
