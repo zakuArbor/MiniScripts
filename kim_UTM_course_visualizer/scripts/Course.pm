@@ -14,6 +14,21 @@ sub new {
 		}, $class;
 }
 
+sub get_course_name {
+	my $self = shift;
+	$self->{course_name};
+}
+
+sub append_course_name {
+	my $self = shift;
+	$self->{course_name} .= " " . shift; 
+}
+
+sub set_course_name {
+	my $self = shift;
+	$self->{course_name} = shift; 
+}
+
 sub to_string {
 	my $self = shift;
 	return 
