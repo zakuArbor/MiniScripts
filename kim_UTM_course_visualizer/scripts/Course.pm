@@ -34,12 +34,12 @@ sub to_string {
 	my $self = shift;
 	return 
 	"\t{\n" .
-			"\t\tcourse_code: $self->{course_code},\n" .
-			"\t\tcourse_name: $self->{course_name},\n" .
+			"\t\tcourse_code: \"$self->{course_code}\",\n" .
+			"\t\tcourse_name: \"$self->{course_name}\",\n" .
 			"\t\tweight:      $self->{weight},\n"      .
-			"\t\tcourse_grade:$self->{course_grade},\n".
-			"\t\tcourse_avg:  $self->{course_avg},\n"  . 
-			"\t\tsemester:    $self->{semester},\n"    .
+			"\t\tcourse_grade:\"$self->{course_grade}\",\n".
+			"\t\tcourse_avg:  \"$self->{course_avg}\",\n"  . 
+			"\t\tsemester:    \"$self->{semester}\",\n"    .
 	"\t}";
 }
 

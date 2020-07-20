@@ -52,7 +52,7 @@ sub parse_academic_history {
 	my $course_html_re = qr/.*<div class="courses\s.*">/;
 	my $delimiter_re = qr/\s+/;
 	my $course_code_re = qr/\w{3}\d{3}[H|Y][1|5]/;
-	my $course_name_re = qr/([\w+\s?]+)/;
+	my $course_name_re = qr/([\w+\s?|\&amp\;|w-\w]+)/;
 	my $weight_re = qr/0\.50|1\.00/;
 	my $mark_re = qr/\d+|\s{2}/; #Note: this script will not capture your Mark in the course, just your grade (i.e. letter grade) 
 	my $letter_grade_re = qr/[ABCD][-+]?|CR|NCR|\*|\s/;
@@ -100,6 +100,8 @@ sub parse_academic_history {
 				$state = $SEMESTER_HEADER_STATE;
 				#print Dumper(\@courses);
 			}
+			print "********\n";
+			print $line . "\n";
 
 			if (($course_name2) = $line =~ /^\s+${course_name_re}\s+$/) {
 				#if course name is too long that it goes to another line
@@ -107,6 +109,7 @@ sub parse_academic_history {
 				#print $courses[-1]->append_course_name($course_name2);
 			}
 			elsif (($course_code, $course_name, undef, $weight, $course_grade, $course_avg) = $line =~ /$course_re/) {
+				print "match\n";
 				if (!($line =~ /\s+$course_note$/)) {
 					
 					$course_name = trim_string($course_name);
@@ -152,8 +155,7 @@ close($fh);
 
 if (!$courses_ref) {
 	print(STDERR "Failed to parse Academic History\n");
-	return -1;
 }
-
-generate_courses_file($courses_ref);
-0;
+else {
+	generate_courses_file($courses_ref);
+}
