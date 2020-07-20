@@ -1,6 +1,6 @@
 # UTM Course Visualizer
 
-A simple webpage that shows various graphs about your progress at UTM over the years
+A simple webpage that shows various graphs about your progress at UTM over the years. Feed in your depression or ego (whatever suits you). Partiularly helpful to visualize a student's academic performance rather than parsing through a transcript.
 
 
 
