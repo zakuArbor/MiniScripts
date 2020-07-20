@@ -52,7 +52,7 @@ sub parse_academic_history {
 	my $course_html_re = qr/.*<div class="courses\s.*">/;
 	my $delimiter_re = qr/\s+/;
 	my $course_code_re = qr/\w{3}\d{3}[H|Y][1|5]/;
-	my $course_name_re = qr/([\w+\s?|\&amp\;|w-\w]+)/;
+	my $course_name_re = qr/([\w+\s?|\&amp\;|\w\-\w]+)/;
 	my $weight_re = qr/0\.50|1\.00/;
 	my $mark_re = qr/\d+|\s{2}/; #Note: this script will not capture your Mark in the course, just your grade (i.e. letter grade) 
 	my $letter_grade_re = qr/[ABCD][-+]?|CR|NCR|\*|\s/;
@@ -60,6 +60,7 @@ sub parse_academic_history {
 	my $sem_end_re = qr/<\/div>/;
 	my $course_note = qr/EXT/;
 	my $session_header_re = qr/<h3 class="sessionHeader pre-elem">20(\d{2})\s+(Fall|Winter|Summer).*<\/h3>/;
+	my $transfer_course_header = qr/<p class="info-section">/;
 	my $course_code;
 	my $course_name;
 	my $course_name2;
@@ -88,6 +89,11 @@ sub parse_academic_history {
 			if (($semester_year, $semester_session) = $line =~ /$session_header_re/) {
 				$state = $COURSE_HEADER_STATE;
 			}
+			if ($line =~ /$transfer_course_header/) {
+				$state = $COURSE_HEADER_STATE;
+				$semester_year = "";
+				$semester_session = "";
+			}
 		}
 		elsif ($state == $COURSE_HEADER_STATE) {
 			if ($line =~ /${course_html_re}/) {
@@ -109,14 +115,13 @@ sub parse_academic_history {
 				#print $courses[-1]->append_course_name($course_name2);
 			}
 			elsif (($course_code, $course_name, undef, $weight, $course_grade, $course_avg) = $line =~ /$course_re/) {
-				print "match\n";
 				if (!($line =~ /\s+$course_note$/)) {
-					
+					print "match\n";
 					$course_name = trim_string($course_name);
 
 					$course_avg =~ s/\s+/*/g; #if course average is blank
 
-					my $sem = $semester_session . " '" . $semester_year;
+					my $sem = $semester_session ? $semester_session . " '" . $semester_year : "";
 
 					push(@courses, Course->new({
 						course_code => $course_code,
@@ -126,6 +131,7 @@ sub parse_academic_history {
 						course_avg  => $course_avg,
 						semester    => $sem,
 					}));
+					print (Dumper(\@courses));
 				}
 			}
 		}
