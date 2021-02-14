@@ -1,0 +1,179 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper, potrait, margin=0.5in]{geometry}
+
+\title{Budget-Database Design}
+\author{Ju Hong Kim }
+\date{December 2017}
+
+\begin{document}
+
+\maketitle
+
+\textbf{A. System Description}
+
+A report is a transaction that occurred at some date at some store. To clarify, it is an instance of a business deal where the user paid some amount of money to some store. A report will contain \textbf{records} of what object the user bought from the store. To illustrate, if a user bought a box of oranges from a grocery store such as Freshco on December 23, 2017, then the report will contain the fact that the user went to Freshco on December 23, 2017. A record will indicate what the user bought which in this case was oranges. The record will store the data that the user bought a box of oranges from the grocery department. If the user also bought 10 pounds of sugar from Freshco, then there will be a new \textbf{record} (tuple) that will be added to the \textbf{report}. The new record will contain the fact that the user also bought 10 pounds of sugar from Freshco which belongs to the grocery department. um is a field that represents unit of measurement in which this case would be pounds and the qty represents the quantity bought which in this case would be 10.
+
+\textbf{B. Entity Relationship Diagram}
+\\
+
+
+\textbf{C. Translate your ERD to a Relational Schema}
+\\
+
+BCNF Definition (Boyce–Codd normal form): If for every non-trivial functional dependencies X $\to$ Y that holds in R, X is a superkey
+
+\begin{itemize}
+    \item Y must not be contained in X (must be non-trivial)
+    \item All attributes must not functionally depend on anything else other than the superkey itself
+\end{itemize}
+
+
+Depending on the algorithm used to construct a BCNF relation, we can only guarantee, two of the three properties of an ideal relation:
+
+\begin{enumerate}
+    \item No anomalies 
+    \item Loseless Joins
+    \item Dependency Preservation
+\end{enumerate}
+
+
+\\
+Both relation user and email are in a binary relation meaning they are in BCNF. The reason for this is that if both attributes form the primary key then there is no functional dependencies. If one attribute forms a primary key, then other will depend on it and hence is in BCNF.
+\\
+
+\textbf{Side Note:} All relations below are in BCNF so I will just be justifying why each relation is in BCNF. For binary relations such as the relation email are in BCNF from the rule and justification above, but another reasoning will be provided below to enhance the justification. Furthermore, all other relations that are not binary and have functional dependencies can be simply be stated that since the LHS is a primary key, it does not violate BCNF. However, the justification seems to be weak to me, so a further justification will be provided below.
+\\
+
+\textbf{Side Note 2:} All relations that have an ID as their primary key may break the BCNF property. However, as a design choice I think that having a numeric ID as a key is much more efficient. Some may argue that having an extra column causes redundancy since we already have a natural key and the attributes are not dependent on the key only but on other attributes in the table along with the fact that it increases space cost. However, I would argue that having an ID would increase the performance of the database due to the fact that it is much easier to perform operations on integers such as JOINS because string comparison is way more complex than integer comparisons. Furthermore, ID are independent on the data meaning that if a field gets changed, there would be no need to update all tables referring to the field. If the key was some string such as the product name, all relations that uses the product name as a foreign key would all need to be updated when the product name changes. This would require a huge cost to update.  
+\\
+
+\textbf{user}(\underline{user\_id}, email)
+
+Although for the budget system all usernames are unique, having username as a primary key for the relation seems to be a waste due to the possible performance cost to index the username. A numerical value as a primary key seems to be more likely to perform better due to the fact it would be easier to hash numerical values. However, I have no definite proof of the performance cost and hence is just a speculation of my own limited understanding of how database management systems are implemented.
+
+
+\begin{itemize}
+    \item user\_id are unique and the key to the relation user
+    \item username is a string of characters with a minimum length of 3 characters and a maximum character count of 15. username is unique and cannot be null. Every user in the system must have a username that does not start with "admin" since the prefix "admin" is reserved for all system administrators. 
+\end{itemize}
+
+Functional Dependencies: user\_id $\to$ username
+
+\begin{itemize}
+    \item There is only one functional dependency where \underline{user\_id} is a key.
+    \item Since \underline{user\_id} is a primary key, the key must be the attribute that determines the attribute username. 
+    \item A single user in the system will be associated with one username, and so we have that the attribute username is determined by the \username{user\_id} and nothing else. 
+    \item Therefore the relation user is in BCNF
+\end{itemize}
+
+\textbf{email}(\underline{email\_id}, user\_id, email)
+
+Similar to the relation user, having user\_id and email as a key seems to be a potential waste of index performance since it would be harder to hash the key. So an additional attribute was added to make indexing each tuple much easier and more efficiently based on my very limited knowledge on databases. 
+
+\begin{itemize}
+    \item \underline{email\_id} is a key to the relation email (and hence unique and not null)
+    \item user\_id is a foreign key constraint that belong to the relation user to indicate the association of the user and their email
+    \item email is an attribute that contains the email address associated with the user. A user can have multiple emails associated with their account.
+\end{itemize}
+
+email[user\_id] $\subseteq$ user[user\_id]
+\\
+
+Functional Dependencies: email\_id $\to$ user\_id, email\_id $\to$ email
+
+\begin{itemize}
+    \item There are two functional dependency where \underline{email\_id} is a key.
+    \item For a relation to be in BCNF, all attributes must be dependent on the key and nothing else or else we will have anomalies in the relation.
+    \item The attribute user\_id cannot be a key due to the fact that there can be multiple instances with the same user\_id since a user can have more than one email associated with their email.
+    \item email is dependent on the attribute user\_id which contradicts the fact that all attributes must be functionally dependent on the key.
+    \item If we take away the attribute and replace it with user\_id and email to be the key, we would be guaranteed that the key is in BCNF and would still be an actual key (unique). 
+    \item However, having an ID has lots of benefits which is posted above why an ID is preferred.
+    \item Therefore, having a relation to be in BCNF if we add an ID in the relation. However we should guarantee that the relation does not contain redundant attributes and either preserve loseless join or functional dependencies preservation if we remove the ID.
+\end{itemize}
+
+\textbf{user\_profile}(\underline{user\_id}, last\_name, first\_name, default\_currency)
+
+user\_profile[user\_id] $\subseteq$ user[user\_id]
+\\
+
+\begin{itemize}
+    \item user\_id is an unique identifier for each account in the system
+    \item last\_name is the attribute that contains a string of alphabetical characters (1-25 characters) that identifies the user's family, community or tribe. Last name is also referred as surname. If a user has more than 25 characters, then the user should contact the system administrator to fix the problem. The current system shall assume that there is no last name longer than 25 characters.
+    \item first\_name is also known as given name is a field that contains a string of alphabetical characters (1-25 characters) that represents the name of the user (not including the surname). Middle names and other titles are not stored in the system. The system shall assume that no special characters can be part of a person's name to avoid potential security risks.  
+\end{itemize}
+
+Functional Dependencies: user\_id $\to$ last\_name, user\_id $\to$ first\_name, user\_id $\to$ default\_currency
+
+\begin{itemize}
+    \item There are three functional dependencies where \underline{user\_id} is a key
+    \item Since \underline{user\_id} is a primary key, the key must be the attribute that determines all the attributes in the relation 
+    \item A person's name cannot be determined by any other attribute other than the user\_id 
+    \item Last name nor first name can form a key since we can create an instance with people with the same name but in different accounts. This is due to the fact that names are not unique.
+    \item Therefore the attributes last\_name and first\_name are dependent on the key \underline{user\_id}
+    \item For a relation to be in BCNF, we must also ensure that no attributes are dependent on any other attributes other than the key itself. This means that first\_name cannot be dependent on last\_name and vice versa. 
+    \item It is obvious that neither attribute can determine another since names are never unique but have a huge vast number of combinations so it must rely on an attribute that is independent on the data such as the key itself. The key \underline{user\_id} is data indepdendent meaning that the data of the attributes in the relation does not have any significant influence on the value of the user\_id. Since there is no direct relation other than the fact user\_id is used as an unique identifier to each account, the relation satisfies BCNF so far
+    \item default\_currency is not dependent on any other attributes in the relation other than the key itself
+    \item It is logically obvious that names do not influence the currency the person uses. One could say the name may influence on the region in which they reside in. Due to the fact that we live in an era where globalization has already occured, it is no surprise to have foreign names in different countries such as Canada. We could create an instance which would contradict the fact that names influence the currency such as a person with a Russian name residing in Canada and hence use CAD Dollars as their default currency.
+    \item Therefore, the attribute default\_currency is dependent on the key 
+    \item Since all attributes in the relation depend on the key \underline{user\_id} and nothing else, the functional dependency does not violate BCNF and hence the relation is in BCNF
+\end{itemize}
+
+\textbf{report}(\underline{report\_id}, user\_id, store, date)
+
+report[user\_id] $\subseteq$ user[user\_id]
+\\
+
+Functional Dependencies: report\_id $\to$ user\_id, report\_id $\to$ store, report\_id $\to$ date
+
+\begin{itemize}
+    \item The relation report contains 3 functional dependencies
+    \item Since \textbf{report\_id} is a primary key, the key must be the attribute that determines all other attributes in the relation
+    \item All non key attributes should not be dependent on any other keys other than the key itself (and prime attributes that make up the key) to satisfy the BCNF property
+    \item A user can own several reports and so is not unique to the relation. However, user\_id is not logically dependent on the report itself. However, report\_id is a very convenient way to identify a transaction due to reasons specified above. If the date, store and user\_id was used as a key, we can have an instance where the user went to the store twice on the same day and we would want to keep the distinction that the user went twice on that day. The date attribute will not store the transaction time but only the date of when the transaction occurred and so will not be able to keep this property we wish to have. Therefore, we will have user\_id be dependent on the report\_id to keep that property and to be able to identify who owns the transaction in the system.
+    \item store does not depend on any other attributes other than the report\_id since it would not make any logical sense that the store in the report is dependent on the user, date, or both since anyone can visit the same store on the same date. Therefore, store is dependent on the report (the key itself) and nothing else
+    \item The attribute date does not have any attributes depending on it nor does the attribute depend on other attributes (other than the key). A date is not unique since multiple users could visit the same store at the same date which violates uniqueness.
+\end{itemize}
+
+\textbf{record}(\underline{record\_id}, report\_id, item\_name, qty, um, type\_id)
+
+record[report\_id] $\subseteq$ report[report\_id]
+
+record[type\_id] $\subseteq$ type[type\_id]
+\\
+
+Functional Dependencies: record\_id $\to$ report\_id, record\_id $\to$ item\_name, record\_id $\to$ qty, record\_id $\to$ um, record\_id $\to$ type\_id
+
+\begin{itemize}
+    \item There are 5 non trivial functional dependencies where the primary key of the relation is \textbf{record\_id}
+    \item All attributes must be dependent on the key itself and nothing else
+    \item Similar to previous relations, an ID is very convenient way to be used as an identifier and so will be used for this relation as well. 
+    \item Although a record is dependent on the report in some logical sense, a report is not unique since a report can contain several records which is often the case in this system. And so it would make more sense to say that the report is functionally dependent on the record since there is no other attributes that is more appropriate than the key itself. Therefore, a report is not functionally dependent on any other attributes other than the key itself.
+    \item The item\_name is not dependent on any other attributes other than the key itself as needed to satisfy the BCNF property. The name of an item does not depend on the quantity and unit of measurement since those two attributes do not tell you exactly what item was bought. 
+    \item qty is the attribute that represents the quantity bought for the specific item. The attribute qty is not dependent on any other attribute other than the key itself. The item does not determine the amount bought since a user could buy the equal amount quantity but of another object which supports the fact that the attribute is not functionally dependent on anything else other than the key.
+    \item um represents the unit of measurement. um is not functionally dependent on any other attributes other than the key itself since the name of the item can only imply the unit of measurement but with no certainty. For example, a water bottle can be measured in terms of oz, ml, and etc. 
+    \item type\_id represents the category the item belongs to such as groceries. The type\_id is not unique to the relation since multiple items can be belong to the same category. Although an item's name can "determine" the category of the object, it is without certainty. A toy's name could be called Chocolate but a toy does not belong to the grocery/food category. Therefore, the attribute type\_id is not dependent on any other attributes other than the key itself.
+\end{itemize}
+
+
+\textbf{type}(\underline{type\_id}, type)
+
+Functional Dependencies: type\_id $\to$ type
+
+\begin{itemize}
+    \item The relation has only one functional dependency, hence is already in BCNF because the relation is binary. An explanation can be seen above but a brief explanation shall be discussed below.
+    \item The relation type is a great example to explain the reasoning behind using type\_id
+    \item Although type is an attribute that is unique and can be used as a key, it would be a waste and redundant to not have a relation to store the different categories that exist in the system. 
+    \item It would be very inefficient to fix the whole system whenever an update on the type occurs such as changing the fact that groceries can be also called food instead. Having a numerical key will avoid such redundant need to fix all tuples in the system that refers to the type relation or attribute type.
+    \item An numerical identifier also avoids the expensive operation to compare between the types since numerical comparisons are very simple to do.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+\end{document}

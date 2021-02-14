@@ -1,0 +1,10 @@
+insert into report (user_id, store_id, date) values (18, 8, '2015-08-10');
+insert into report (user_id, store_id, date) values (10, 4, '2017-02-14');
+insert into report (user_id, store_id, date) values (20, 5, '2016-09-27');
+insert into report (user_id, store_id, date) values (13, 1, '2017-07-05');
+insert into report (user_id, store_id, date) values (19, 4, '2017-07-05');
+insert into report (user_id, store_id, date) values (19, 1, '2017-11-15');
+insert into report (user_id, store_id, date) values (5, 3, '2015-01-13');
+insert into report (user_id, store_id, date) values (19, 12, '2016-03-17');
+insert into report (user_id, store_id, date) values (20, 19, '2017-04-14');
+insert into report (user_id, store_id, date) values (9, 18, '2017-12-22');
