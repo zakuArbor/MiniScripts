@@ -1,0 +1,144 @@
+$screen_color: rgba(0, 0, 0, 0);
+$button: rgba(50,50,50,0);
+$button_square: rgba(50,50,50,0);
+$edge: rgba(108, 122, 137, 1);
+$power: rgba(108, 122, 137, 1);
+$phone: rgba(46, 49, 49, 1);
+$vol: rgba(108, 122, 137, 1);
+$camera: rgb(70,70,70);
+$speaker: rgb(70,70,70);
+$screen: rgb(10,10,10);
+
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+body {
+  background: #FEEE9D;
+  font-size: 15px;
+}
+* {
+  position: absolute;
+}
+
+.phone {
+  width: 10em;	
+  height: 20em;
+  border-color: $edge;
+  border-width: 0.5em;
+  border-style: solid;
+  border-radius: 1.5em;
+  background-color: $phone;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.screen {
+  width: 9em;	
+  height: 15em;
+  background-color: $screen;
+  left: 0.5em;
+  top: 2.5em;
+}
+
+.side_button {
+  width: 0.25em;
+}
+
+.power {
+  @extend .side_button;
+  height: 2em;
+  left: -0.75em;
+  top: 2em;
+  background-color: $power;
+}
+
+.vol_button {
+  @extend .side_button;
+  height: 1em;
+}
+
+.vol_up {
+  @extend .vol_button;
+  background-color: $vol;
+  left: -0.75em;
+  top: 5em;
+}
+
+.vol_down {
+  @extend .vol_button;
+  background-color: $vol;
+  left: -0.75em;
+  top: 7em;
+}
+
+.top_components {
+  height: 0.75em;
+}
+
+.top_screen_components {
+  @extend .top_components;
+  width: 5.5em;
+  top: 0.75em;
+  left: 2em;
+}
+
+.camera {
+  @extend .top_components;
+  width: 0.75em;
+  background-color: $camera;
+  border-radius: 0.75em;
+}
+
+.lens {
+  width: 0.25em;
+  height: 0.25em !important;
+  background-color: blue;
+  border-radius: 0.25em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.speaker {
+  @extend .top_components;
+  width: 4em;
+  background-color: $speaker;
+  left: 1.2em;
+  border-top-left-radius: 0.75em;
+  border-bottom-left-radius: 0.75em;
+  border-top-right-radius: 0.75em;
+  border-bottom-right-radius: 0.75em;
+}
+
+.home_button {
+  width: 1.5em;
+  height: 1.5em;
+  border-style: solid;
+  border-color: black;
+  border-width: 0.15em;
+  border-radius: 100%;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -1%);
+}
+
+.home {
+  width: 0.75em;
+  height: 0.75em;
+  border-color: grey;
+  border-style: solid;
+  border-width: 0.1em;
+  border-radius: 10%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
