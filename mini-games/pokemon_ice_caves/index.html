@@ -1,0 +1,43 @@
+<html>
+<head>
+	<link rel="stylesheet" href="style.css">
+	<script src="js/object.js"></script>
+	<script src="js/map.js"></script>
+	
+</head>
+<body>
+	<table id = "board">
+		
+	</table>
+
+	<script>
+		var map = getMap();
+		console.log(map["actors"]);
+		var board = new Board(map["width"], map["height"], map["actors"], map["player"], map["actors"]["types"], map["invalid_coord"], map["map"]);
+
+		board.drawBoard();
+
+		document.addEventListener('keydown', (event) => {
+			const keyName = event.key.toLowerCase();
+
+			var dir = "";
+			console.log(keyName);
+			switch (keyName) {
+		  		case "w":
+		  			dir = "up";
+		  			break;
+			  	case "d":
+			  		dir = "right";
+			  		break;
+		  		case "s":
+			  		dir = "down";
+			  		break;
+			  	case "a":
+		  			dir = "left";
+		  			break;
+			}
+			  board.move(dir);
+		}, false);
+	</script>
+</body>
+</html>

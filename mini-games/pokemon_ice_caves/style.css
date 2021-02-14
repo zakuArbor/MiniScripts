@@ -1,0 +1,40 @@
+td {
+	width: 40px;
+	height: 40px;
+	background-color: blue;
+	border-color: black;
+	padding: 0px;
+}
+
+#board {
+	position: relative;
+	border-collapse: collapse;
+	padding: 0px;
+}
+
+#player {
+	position: absolute;
+	background-image: url("images/player-sprite-sheet.png");
+	background-size: 320px 85px;
+	z-index: 5;
+}
+
+.tile, .wall, #pokeball, .layer1, .layer2, #player {
+	width: 40px;
+	height: 40px;
+}
+
+.layer1 {
+	z-index: 1;
+}
+
+.layer2 {
+	position: absolute;
+	z-index: 2;
+}
+
+#pokeball {
+	position: absolute;
+	background-image: url("pokeball.png");
+	background-size: 40px 40px;
+}
